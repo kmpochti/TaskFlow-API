@@ -20,13 +20,13 @@ public class HelloController {
     }
 
     @PostMapping
-    public Task createTask(@Valid @RequestBody Task task) {
-        return taskService.createTask(task);
+    public Task createTask(@Valid @RequestBody TaskDTO taskDto) {
+        return taskService.createTask(taskDto);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
-        return taskService.updateTask(id, task);
+    public Task updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDto) {
+        return taskService.updateTask(id, taskDto);
     }
 
     @DeleteMapping("/{id}")
