@@ -14,6 +14,7 @@ public class Task {
     private Long id;
     private String description;
     private boolean completed;
+    private String title;
 
     public Task() {}
 
@@ -28,4 +29,6 @@ public class Task {
     public void setDescription(String description) {this.description = description;}
     public boolean isCompleted() {return completed;}
     public void setCompleted(boolean completed) {this.completed = completed;}
+    public String getTitle() {return title;}
+    public void setTitle(String title) {this.title = title;}
 }
