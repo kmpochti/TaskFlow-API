@@ -1,10 +1,8 @@
 package com.example.demo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 public class Task {
@@ -17,12 +15,20 @@ public class Task {
     private boolean completed;
     @NotBlank(message = "Title is mandatory")
     private String title;
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
     public Task() {}
 
-    public Task(String description,boolean completed){
+    public Task(String description,boolean completed,String title){
         this.description=description;
         this.completed=completed;
+        this.title = title;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
 
     public long getId() {return id;}
@@ -33,4 +39,5 @@ public class Task {
     public void setCompleted(boolean completed) {this.completed = completed;}
     public String getTitle() {return title;}
     public void setTitle(String title) {this.title = title;}
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }
