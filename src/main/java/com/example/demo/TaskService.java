@@ -1,7 +1,10 @@
 package com.example.demo;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +18,18 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public Page<TaskDTO> getAllTasks(int page, int size, String sortBy) {
+        logger.info("Ανάκτηση σελίδας {} με μέγεθος {} και ταξινόμηση ανά {}", page, size, sortBy);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+
+        return taskRepository.findAll(pageable)
+                .map(task -> new TaskDTO(
+                        task.getId(),
+                        task.getTitle(),
+                        task.getDescription(),
+                        task.isCompleted()
+                ));
     }
 
     public Task createTask(TaskDTO taskDto) {

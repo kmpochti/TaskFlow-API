@@ -8,6 +8,9 @@ public class TaskDTO {
     private boolean completed;
     private String description;
 
+    public TaskDTO(long id, String title, String description, boolean completed) {
+    }
+
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 

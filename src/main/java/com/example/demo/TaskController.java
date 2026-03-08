@@ -1,22 +1,28 @@
 package com.example.demo;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
-public class HelloController {
+public class TaskController {
 
     private final TaskService taskService;
 
-    public HelloController(TaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
+    // Η νέα GetMapping με παραμέτρους pagination
     @GetMapping
-    public List<Task> getAllTasks() {
-        return taskService.getAllTasks();
+    public ResponseEntity<Page<TaskDTO>> getAllTasks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy) {
+
+        return ResponseEntity.ok(taskService.getAllTasks(page, size, sortBy));
     }
 
     @PostMapping
